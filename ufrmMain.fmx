@@ -10,12 +10,51 @@ object frmMain: TfrmMain
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
   object statMain: TStatusBar
+    Padding.Left = 5.000000000000000000
+    Padding.Right = 25.000000000000000000
     Position.Y = 517.000000000000000000
     ShowSizeGrip = True
     Size.Width = 841.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
+    object lytAppVersion: TLayout
+      Align = Right
+      Position.X = 704.000000000000000000
+      Size.Width = 112.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object lblAppVersionValue: TLabel
+        Align = Right
+        AutoSize = True
+        StyledSettings = [Family, Size, Style]
+        Position.X = 55.000000000000000000
+        Size.Width = 57.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.FontColor = claLime
+        TextSettings.WordWrap = False
+        Text = '2022.10.16'
+        TabOrder = 0
+        OnResized = OnAppVersionResized
+      end
+      object lblAppVersionHeader: TLabel
+        Align = Right
+        AutoSize = True
+        StyledSettings = [Family, Size, FontColor]
+        Margins.Right = 5.000000000000000000
+        Position.X = 6.000000000000000000
+        Size.Width = 44.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {04060000000000000004000000}
+        TextSettings.WordWrap = False
+        Text = 'Version:'
+        TabOrder = 1
+        OnResized = OnAppVersionResized
+      end
+    end
   end
   object tlbMain: TToolBar
     Size.Width = 841.000000000000000000

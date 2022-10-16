@@ -15,12 +15,17 @@ uses
   FMX.Dialogs,
   FMX.StdCtrls,
   FMX.Controls.Presentation,
-  udmStyles;
+  udmStyles,
+  FMX.Layouts;
 
 type
   TfrmMain = class(TForm)
     statMain: TStatusBar;
     tlbMain: TToolBar;
+    lytAppVersion: TLayout;
+    lblAppVersionValue: TLabel;
+    lblAppVersionHeader: TLabel;
+    procedure OnAppVersionResized(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,4 +39,10 @@ implementation
 
 {$R *.fmx}
 
+procedure TfrmMain.OnAppVersionResized(Sender: TObject);
+begin
+  lytAppVersion.Width := lblAppVersionValue.Width + lblAppVersionHeader.Width + lblAppVersionHeader.Margins.Right;
+end;
+
 end.
+
