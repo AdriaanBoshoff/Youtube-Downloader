@@ -11,6 +11,9 @@ uses
 
 begin
   GlobalUseSkia := True;
+
+  Application.Title := 'Youtube Downloader FMX';
+
   Application.Initialize;
   Application.CreateForm(TdmStyles, dmStyles);
   Application.CreateForm(TfrmMain, frmMain);
