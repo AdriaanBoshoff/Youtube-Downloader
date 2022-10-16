@@ -88,7 +88,7 @@ begin
   FlblVideoTitle.Align := TAlignLayout.Client;
   FlblVideoTitle.Margins.Left := 5;
   FlblVideoTitle.Margins.Right := 5;
-  FlblVideoTitle.Text := 'Video Title / Audio Title';
+  FlblVideoTitle.Text := 'Video Title / Audio Title' + sLineBreak + 'New line';
   FlblVideoTitle.Font.Style := [TFontStyle.fsBold];
   FlblVideoTitle.StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
 
