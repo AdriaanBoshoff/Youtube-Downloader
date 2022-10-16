@@ -3,12 +3,14 @@ program Youtube_Downloader_FMX;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  ufrmMain in 'ufrmMain.pas' {Form1};
+  ufrmMain in 'ufrmMain.pas' {frmMain},
+  udmStyles in 'udmStyles.pas' {dmStyles: TDataModule};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TdmStyles, dmStyles);
+  Application.CreateForm(TfrmMain, frmMain);
   Application.Run;
 end.

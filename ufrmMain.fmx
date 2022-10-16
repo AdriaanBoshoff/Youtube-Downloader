@@ -1,11 +1,26 @@
-object Form1: TForm1
+object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'Form1'
-  ClientHeight = 480
-  ClientWidth = 640
+  Caption = 'Youtube Downloader FMX'
+  ClientHeight = 539
+  ClientWidth = 841
+  StyleBook = dmStyles.stylbkRedRock
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
+  object statMain: TStatusBar
+    Position.Y = 517.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 841.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+  object tlbMain: TToolBar
+    Size.Width = 841.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+  end
 end
