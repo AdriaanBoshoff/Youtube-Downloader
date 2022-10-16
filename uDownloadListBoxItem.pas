@@ -109,11 +109,11 @@ begin
   FlblProgressText := TLabel.Create(FpbProgress);
   FlblProgressText.Parent := FpbProgress;
   FlblProgressText.Align := TAlignLayout.Contents;
-  FlblProgressText.Text := '10MB / 50MB   ETA: 00:30   32mb/s';
-  FlblProgressText.StyledSettings := [TStyledSetting.Family];
+  FlblProgressText.Text := '10MB / 50MB   32mb/s   ETA: 00:30';
+  FlblProgressText.StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
  // FlblProgressText.Font.Style := [TFontStyle.fsBold];
   FlblProgressText.TextSettings.HorzAlign := TTextAlign.Center;
-  FlblProgressText.FontColor := TAlphaColorRec.Lightgray;
+ // FlblProgressText.FontColor := TAlphaColorRec.Lightgray;
 
   // Cancel Button
   FbtnCancel := TSpeedButton.Create(FControlLayout);
