@@ -78,12 +78,12 @@ object frmMain: TfrmMain
       TextSettings.Font.StyleExt = {00060000000000000004000000}
       TextSettings.WordWrap = False
       Text = 'URL:'
-      TabOrder = 1
+      TabOrder = 0
     end
     object edtURL: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       Align = Client
-      TabOrder = 2
+      TabOrder = 1
       TextSettings.HorzAlign = Center
       Margins.Left = 5.000000000000000000
       Margins.Right = 5.000000000000000000
@@ -102,23 +102,25 @@ object frmMain: TfrmMain
     end
     object btnDownloadMP4: TButton
       Align = Right
+      CanFocus = False
       Position.X = 736.000000000000000000
       Position.Y = 5.000000000000000000
       Size.Width = 100.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 4
+      TabOrder = 3
       Text = 'Download MP4'
     end
     object btnDownloadMP3: TButton
       Align = Right
+      CanFocus = False
       Margins.Right = 5.000000000000000000
       Position.X = 631.000000000000000000
       Position.Y = 5.000000000000000000
       Size.Width = 100.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 3
+      TabOrder = 2
       Text = 'Download MP3'
     end
   end
@@ -134,7 +136,7 @@ object frmMain: TfrmMain
     TextSettings.Font.StyleExt = {04060000000100000004000000}
     TextSettings.HorzAlign = Center
     Text = 'Downloads:'
-    TabOrder = 4
+    TabOrder = 3
   end
   object lstDownloads: TListBox
     Align = Client
@@ -146,7 +148,7 @@ object frmMain: TfrmMain
     Size.Height = 445.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'transparentlistboxstyle'
-    TabOrder = 5
+    TabOrder = 4
     DisableFocusEffect = True
     DefaultItemStyles.ItemStyle = ''
     DefaultItemStyles.GroupHeaderStyle = ''
