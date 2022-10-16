@@ -18,7 +18,7 @@ uses
   udmStyles,
   FMX.Layouts,
   FMX.ListBox,
-  FMX.Edit;
+  FMX.Edit, Skia, Skia.FMX;
 
 type
   TfrmMain = class(TForm)
@@ -34,6 +34,7 @@ type
     btnClearURL: TClearEditButton;
     btnDownloadMP4: TButton;
     btnDownloadMP3: TButton;
+    procedure FormCreate(Sender: TObject);
     procedure OnAppVersionResized(Sender: TObject);
   private
     { Private declarations }
@@ -46,7 +47,24 @@ var
 
 implementation
 
+uses
+  uDownloadListBoxItem;
+
 {$R *.fmx}
+
+procedure TfrmMain.FormCreate(Sender: TObject);
+begin
+  lstDownloads.BeginUpdate;
+  try
+    for var I := 0 to 10 do
+    begin
+      var aItem := TDownloadListBoxItem.Create(lstDownloads);
+      lstDownloads.AddObject(aItem);
+    end;
+  finally
+    lstDownloads.EndUpdate;
+  end;
+end;
 
 procedure TfrmMain.OnAppVersionResized(Sender: TObject);
 begin

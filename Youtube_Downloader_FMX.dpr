@@ -5,7 +5,9 @@ uses
   FMX.Forms,
   Skia.FMX,
   ufrmMain in 'ufrmMain.pas' {frmMain},
-  udmStyles in 'udmStyles.pas' {dmStyles: TDataModule};
+  udmStyles in 'udmStyles.pas' {dmStyles: TDataModule},
+  uDownloadListBoxItem in 'uDownloadListBoxItem.pas',
+  uDownloadThread in 'uDownloadThread.pas';
 
 {$R *.res}
 

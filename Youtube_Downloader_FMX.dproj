@@ -285,6 +285,8 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="uDownloadListBoxItem.pas"/>
+        <DCCReference Include="uDownloadThread.pas"/>
         <None Include=".gitignore"/>
         <None Include="README.md"/>
         <BuildConfiguration Include="Base">
