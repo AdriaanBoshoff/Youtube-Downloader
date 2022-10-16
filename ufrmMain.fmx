@@ -20,8 +20,8 @@ object frmMain: TfrmMain
     TabOrder = 1
     object lytAppVersion: TLayout
       Align = Right
-      Position.X = 704.000000000000000000
-      Size.Width = 112.000000000000000000
+      Position.X = 706.000000000000000000
+      Size.Width = 110.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
@@ -29,7 +29,7 @@ object frmMain: TfrmMain
         Align = Right
         AutoSize = True
         StyledSettings = [Family, Size, Style]
-        Position.X = 55.000000000000000000
+        Position.X = 53.000000000000000000
         Size.Width = 57.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
@@ -44,7 +44,7 @@ object frmMain: TfrmMain
         AutoSize = True
         StyledSettings = [Family, Size, FontColor]
         Margins.Right = 5.000000000000000000
-        Position.X = 6.000000000000000000
+        Position.X = 4.000000000000000000
         Size.Width = 44.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
@@ -57,9 +57,101 @@ object frmMain: TfrmMain
     end
   end
   object tlbMain: TToolBar
+    Padding.Left = 5.000000000000000000
+    Padding.Top = 5.000000000000000000
+    Padding.Right = 5.000000000000000000
+    Padding.Bottom = 5.000000000000000000
     Size.Width = 841.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2
+    object lblURLHeader: TLabel
+      Align = Left
+      AutoSize = True
+      StyledSettings = [Family, FontColor]
+      Position.X = 5.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 33.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      TextSettings.WordWrap = False
+      Text = 'URL:'
+      TabOrder = 1
+    end
+    object edtURL: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 2
+      TextSettings.HorzAlign = Center
+      Margins.Left = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Size.Width = 583.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Enter media URL to download'
+      object btnClearURL: TClearEditButton
+        CanFocus = False
+        Cursor = crArrow
+        Size.Width = 28.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+    object btnDownloadMP4: TButton
+      Align = Right
+      Position.X = 736.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'Download MP4'
+    end
+    object btnDownloadMP3: TButton
+      Align = Right
+      Margins.Right = 5.000000000000000000
+      Position.X = 631.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Download MP3'
+    end
+  end
+  object lblDownloadsHeader: TLabel
+    Align = Top
+    AutoSize = True
+    StyledSettings = [Family, FontColor]
+    Position.Y = 40.000000000000000000
+    Size.Width = 841.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {04060000000100000004000000}
+    TextSettings.HorzAlign = Center
+    Text = 'Downloads:'
+    TabOrder = 4
+  end
+  object lstDownloads: TListBox
+    Align = Client
+    Margins.Left = 5.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Size.Width = 831.000000000000000000
+    Size.Height = 445.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'transparentlistboxstyle'
+    TabOrder = 5
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 831.000000000000000000
+    Viewport.Height = 445.000000000000000000
   end
 end

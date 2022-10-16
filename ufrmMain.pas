@@ -16,7 +16,9 @@ uses
   FMX.StdCtrls,
   FMX.Controls.Presentation,
   udmStyles,
-  FMX.Layouts;
+  FMX.Layouts,
+  FMX.ListBox,
+  FMX.Edit;
 
 type
   TfrmMain = class(TForm)
@@ -25,6 +27,13 @@ type
     lytAppVersion: TLayout;
     lblAppVersionValue: TLabel;
     lblAppVersionHeader: TLabel;
+    lblDownloadsHeader: TLabel;
+    lstDownloads: TListBox;
+    lblURLHeader: TLabel;
+    edtURL: TEdit;
+    btnClearURL: TClearEditButton;
+    btnDownloadMP4: TButton;
+    btnDownloadMP3: TButton;
     procedure OnAppVersionResized(Sender: TObject);
   private
     { Private declarations }
