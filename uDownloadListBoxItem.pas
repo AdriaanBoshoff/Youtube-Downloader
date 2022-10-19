@@ -5,7 +5,8 @@ interface
 uses
   System.UITypes, System.Classes, System.Types, System.SysUtils, FMX.ListBox,
   FMX.Objects, FMX.StdCtrls, FMX.Ani, FMX.Types, FMX.Effects, FMX.Layouts,
-  FMX.Graphics, Skia.FMX, FMX.TabControl, System.IOUtils, FMX.ImgList;
+  FMX.Graphics, Skia.FMX, FMX.TabControl, System.IOUtils, FMX.ImgList,
+  DosCommand;
 
 type
   TDownloadListBoxItem = class(TListBoxItem)
@@ -17,16 +18,29 @@ type
     FpbProgress: TProgressBar;
     FlblProgressText: TLabel;
     FbtnCancel: TSpeedButton;
+    FdosCMD: TDosCommand;
+    // Link
+    FDownloadLink: string;
     procedure BackgroundClicked(Sender: TObject);
     procedure OnMouseHover(Sender: TObject);
     procedure OnMouseHoverLeave(Sender: TObject);
   private
     { Property Methods Gets }
+    function GetDownloadLink: string;
   private
     { Property Methods Sets }
+    procedure SetDownloadLink(const Value: string);
+  private
+    { DosCommand Events }
+    procedure OnNewLine(ASender: TObject; const ANewLine: string; AOutputType: TOutputType);
+    procedure OnTerminate(Sender: TObject);
+    { Other Events }
+    procedure OnCancelClicked(Sender: TObject);
   public
     procedure AfterConstruction; override;
+    procedure StartDownload;
   published
+    property DownloadLink: string read GetDownloadLink write SetDownloadLink;
   end;
 
 implementation
@@ -71,7 +85,6 @@ begin
   FControlLayout.Padding.Bottom := 5;
   FControlLayout.Padding.Left := 5;
 
-
   // Icon
   FIcon := TImage.Create(FControlLayout);
   FIcon.Parent := FControlLayout;
@@ -111,34 +124,81 @@ begin
   FlblProgressText.Align := TAlignLayout.Contents;
   FlblProgressText.Text := '10MB / 50MB   32mb/s   ETA: 00:30';
   FlblProgressText.StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
- // FlblProgressText.Font.Style := [TFontStyle.fsBold];
   FlblProgressText.TextSettings.HorzAlign := TTextAlign.Center;
- // FlblProgressText.FontColor := TAlphaColorRec.Lightgray;
 
   // Cancel Button
   FbtnCancel := TSpeedButton.Create(FControlLayout);
   FbtnCancel.Parent := FControlLayout;
+  FbtnCancel.OnClick := OnCancelClicked;
   FbtnCancel.Align := TAlignLayout.MostRight;
   FbtnCancel.Width := FbtnCancel.Height;
   FbtnCancel.StyleLookup := 'stoptoolbuttonbordered';
+
+  // DosCommand
+  FdosCMD := TDosCommand.Create(Self);
+  FdosCMD.OnNewLine := OnNewLine;
+  FdosCMD.OnTerminated := OnTerminate;
 end;
 
 procedure TDownloadListBoxItem.BackgroundClicked(Sender: TObject);
 begin
+  // Handle on click events
   if Assigned(Self.OnClick) then
     Self.OnClick(Self)
   else if Assigned(Self.ListBox.OnItemClick) then
     Self.ListBox.OnItemClick(Self.ListBox, Self);
 end;
 
+function TDownloadListBoxItem.GetDownloadLink: string;
+begin
+  Result := FDownloadLink;
+end;
+
+procedure TDownloadListBoxItem.OnCancelClicked(Sender: TObject);
+begin
+  // Stop dosCommand if running
+  if FdosCMD.IsRunning then
+    FdosCMD.Stop;
+
+  // Clear bitmap from memory
+  FIcon.Bitmap := nil;
+
+  // Delete the listbox item
+  FreeAndNil(Self);
+end;
+
 procedure TDownloadListBoxItem.OnMouseHover(Sender: TObject);
 begin
+  // Hover background color
   FBackGround.Fill.Color := TAlphaColorRec.Darkred;
 end;
 
 procedure TDownloadListBoxItem.OnMouseHoverLeave(Sender: TObject);
 begin
+  // Default background color
   FBackGround.Fill.Color := $FF1F222A;
+end;
+
+procedure TDownloadListBoxItem.OnNewLine(ASender: TObject; const ANewLine: string; AOutputType: TOutputType);
+begin
+//
+end;
+
+procedure TDownloadListBoxItem.OnTerminate(Sender: TObject);
+begin
+//
+end;
+
+procedure TDownloadListBoxItem.SetDownloadLink(const Value: string);
+begin
+  FDownloadLink := Value;
+end;
+
+procedure TDownloadListBoxItem.StartDownload;
+begin
+  // Check if download link is empty
+  if FDownloadLink.Trim.IsEmpty then
+    Exit;
 end;
 
 end.

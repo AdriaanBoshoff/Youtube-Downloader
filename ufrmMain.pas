@@ -56,7 +56,7 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   lstDownloads.BeginUpdate;
   try
-    for var I := 0 to 100 do
+    for var I := 0 to 20 do
     begin
       var aItem := TDownloadListBoxItem.Create(lstDownloads);
       aItem.Tag := I;
