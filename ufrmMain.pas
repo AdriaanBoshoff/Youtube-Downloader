@@ -56,6 +56,8 @@ begin
   aItem.DownloadMediaType := MediaType;
   lstDownloads.AddObject(aItem);
   aItem.StartDownload;
+
+  edtURL.Text := '';
 end;
 
 procedure TfrmMain.OnAppVersionResized(Sender: TObject);
