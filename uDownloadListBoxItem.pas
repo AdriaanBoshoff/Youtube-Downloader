@@ -6,7 +6,7 @@ uses
   System.UITypes, System.Classes, System.Types, System.SysUtils, FMX.ListBox,
   FMX.Objects, FMX.StdCtrls, FMX.Ani, FMX.Types, FMX.Effects, FMX.Layouts,
   FMX.Graphics, Skia.FMX, FMX.TabControl, System.IOUtils, FMX.ImgList,
-  DosCommand;
+  DosCommand, FMX.Forms;
 
 type
   TYTProgress = record
@@ -23,17 +23,17 @@ type
 type
   TDownloadListBoxItem = class(TListBoxItem)
   private
-    FBackGround     : TRectangle;
-    FControlLayout  : TLayout;
-    FIcon           : TImage;
-    FlblVideoTitle  : TLabel;
-    FpbProgress     : TProgressBar;
+    FBackGround: TRectangle;
+    FControlLayout: TLayout;
+    FIcon: TImage;
+    FlblVideoTitle: TLabel;
+    FpbProgress: TProgressBar;
     FlblProgressText: TLabel;
-    FbtnCancel      : TSpeedButton;
-    FdosCMD         : TDosCommand;
-    FLog            : TStringList;
+    FbtnCancel: TSpeedButton;
+    FdosCMD: TDosCommand;
+    FLog: TStringList;
     // Link
-    FDownloadLink     : string;
+    FDownloadLink: string;
     FDownloadMediaType: TDownloadMediaType;
     procedure BackgroundClicked(Sender: TObject);
     procedure OnMouseHover(Sender: TObject);
@@ -41,6 +41,7 @@ type
   private
     { Private Methods }
     function ParseProgress(const Data: string): TYTProgress;
+    function ParseInfo(const Data: string): string;
   private
     { Property Methods Gets }
     function GetDownloadLink: string;
@@ -69,6 +70,9 @@ type
 
 implementation
 
+uses
+  uCommonFunctions;
+
 { TDownloadListBoxItem }
 
 procedure TDownloadListBoxItem.AfterConstruction;
@@ -76,91 +80,91 @@ begin
   inherited;
 
   { Build Item }
-  Self.Padding.Left       := 5;
-  Self.Padding.Top        := 2.5;
-  Self.Padding.Right      := 5;
-  Self.Padding.Bottom     := 2.5;
-  Self.CanFocus           := False;
+  Self.Padding.Left := 5;
+  Self.Padding.Top := 2.5;
+  Self.Padding.Right := 5;
+  Self.Padding.Bottom := 2.5;
+  Self.CanFocus := False;
   Self.DisableFocusEffect := True;
-  Self.Selectable         := False;
-  Self.Height             := 50;
+  Self.Selectable := False;
+  Self.Height := 50;
 
   // Background
-  FBackGround              := TRectangle.Create(Self);
-  FBackGround.Parent       := Self;
-  FBackGround.Fill.Color   := $FF1F222A;
-  FBackGround.Align        := TAlignLayout.Client;
-  FBackGround.Sides        := [];
-  FBackGround.XRadius      := 5;
-  FBackGround.YRadius      := 5;
-  FBackGround.HitTest      := True;
-  FBackGround.OnClick      := BackgroundClicked;
+  FBackGround := TRectangle.Create(Self);
+  FBackGround.Parent := Self;
+  FBackGround.Fill.Color := $FF1F222A;
+  FBackGround.Align := TAlignLayout.Client;
+  FBackGround.Sides := [];
+  FBackGround.XRadius := 5;
+  FBackGround.YRadius := 5;
+  FBackGround.HitTest := True;
+  FBackGround.OnClick := BackgroundClicked;
   FBackGround.OnMouseEnter := OnMouseHover;
   FBackGround.OnMouseLeave := OnMouseHoverLeave;
   FBackGround.Stroke.Color := $00;
-  FBackGround.Name         := 'FBackGround';
+  FBackGround.Name := 'FBackGround';
 
   // Controls Layout
-  FControlLayout                := TLayout.Create(FBackGround);
-  FControlLayout.Parent         := FBackGround;
-  FControlLayout.Align          := TAlignLayout.Contents;
-  FControlLayout.Padding.Top    := 5;
-  FControlLayout.Padding.Right  := 5;
+  FControlLayout := TLayout.Create(FBackGround);
+  FControlLayout.Parent := FBackGround;
+  FControlLayout.Align := TAlignLayout.Contents;
+  FControlLayout.Padding.Top := 5;
+  FControlLayout.Padding.Right := 5;
   FControlLayout.Padding.Bottom := 5;
-  FControlLayout.Padding.Left   := 5;
+  FControlLayout.Padding.Left := 5;
 
   // Icon
-  FIcon         := TImage.Create(FControlLayout);
-  FIcon.Parent  := FControlLayout;
+  FIcon := TImage.Create(FControlLayout);
+  FIcon.Parent := FControlLayout;
   FIcon.HitTest := False;
-  FIcon.Align   := TAlignLayout.MostLeft;
-  FIcon.Width   := FIcon.Height;
+  FIcon.Align := TAlignLayout.MostLeft;
+  FIcon.Width := FIcon.Height;
   FIcon.Bitmap.LoadFromFile('C:\Users\adria\Documents\GitHub\Youtube-Downloader\Assets\png\download-48.png');
 
   // Video Title
-  FlblVideoTitle                       := TLabel.Create(FControlLayout);
-  FlblVideoTitle.Parent                := FControlLayout;
-  FlblVideoTitle.AutoSize              := True;
+  FlblVideoTitle := TLabel.Create(FControlLayout);
+  FlblVideoTitle.Parent := FControlLayout;
+  FlblVideoTitle.AutoSize := True;
   FlblVideoTitle.TextSettings.WordWrap := True;
-  FlblVideoTitle.Align                 := TAlignLayout.Client;
-  FlblVideoTitle.Margins.Left          := 5;
-  FlblVideoTitle.Margins.Right         := 5;
-  FlblVideoTitle.Text                  := 'Video Title / Audio Title' + sLineBreak + 'New line';
-  FlblVideoTitle.Font.Style            := [TFontStyle.fsBold];
-  FlblVideoTitle.StyledSettings        := [TStyledSetting.Family, TStyledSetting.FontColor];
+  FlblVideoTitle.Align := TAlignLayout.Client;
+  FlblVideoTitle.Margins.Left := 5;
+  FlblVideoTitle.Margins.Right := 5;
+  FlblVideoTitle.Text := 'Video Title / Audio Title' + sLineBreak + 'New line';
+  FlblVideoTitle.Font.Style := [TFontStyle.fsBold];
+  FlblVideoTitle.StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
 
   // Progress Bar
-  FpbProgress                := TProgressBar.Create(FControlLayout);
-  FpbProgress.Parent         := FControlLayout;
-  FpbProgress.Align          := TAlignLayout.Right;
-  FpbProgress.Width          := 400;
-  FpbProgress.HitTest        := False;
-  FpbProgress.Margins.Top    := 5;
-  FpbProgress.Margins.Right  := 5;
+  FpbProgress := TProgressBar.Create(FControlLayout);
+  FpbProgress.Parent := FControlLayout;
+  FpbProgress.Align := TAlignLayout.Right;
+  FpbProgress.Width := 400;
+  FpbProgress.HitTest := False;
+  FpbProgress.Margins.Top := 5;
+  FpbProgress.Margins.Right := 5;
   FpbProgress.Margins.Bottom := 5;
-  FpbProgress.Min            := 0;
-  FpbProgress.Max            := 100;
-  FpbProgress.Value          := 50;
+  FpbProgress.Min := 0;
+  FpbProgress.Max := 100;
+  FpbProgress.Value := 50;
 
   // Progress Text
-  FlblProgressText                        := TLabel.Create(FpbProgress);
-  FlblProgressText.Parent                 := FpbProgress;
-  FlblProgressText.Align                  := TAlignLayout.Contents;
-  FlblProgressText.Text                   := '10MB / 50MB   32mb/s   ETA: 00:30';
-  FlblProgressText.StyledSettings         := [TStyledSetting.Family, TStyledSetting.FontColor];
+  FlblProgressText := TLabel.Create(FpbProgress);
+  FlblProgressText.Parent := FpbProgress;
+  FlblProgressText.Align := TAlignLayout.Contents;
+  FlblProgressText.Text := '10MB / 50MB   32mb/s   ETA: 00:30';
+  FlblProgressText.StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
   FlblProgressText.TextSettings.HorzAlign := TTextAlign.Center;
 
   // Cancel Button
-  FbtnCancel             := TSpeedButton.Create(FControlLayout);
-  FbtnCancel.Parent      := FControlLayout;
-  FbtnCancel.OnClick     := OnCancelClicked;
-  FbtnCancel.Align       := TAlignLayout.MostRight;
-  FbtnCancel.Width       := FbtnCancel.Height;
+  FbtnCancel := TSpeedButton.Create(FControlLayout);
+  FbtnCancel.Parent := FControlLayout;
+  FbtnCancel.OnClick := OnCancelClicked;
+  FbtnCancel.Align := TAlignLayout.MostRight;
+  FbtnCancel.Width := FbtnCancel.Height;
   FbtnCancel.StyleLookup := 'stoptoolbuttonbordered';
 
   // DosCommand
-  FdosCMD              := TDosCommand.Create(Self);
-  FdosCMD.OnNewLine    := OnNewLine;
+  FdosCMD := TDosCommand.Create(Self);
+  FdosCMD.OnNewLine := OnNewLine;
   FdosCMD.OnTerminated := OnTerminate;
 
   // Logs
@@ -188,9 +192,14 @@ end;
 
 procedure TDownloadListBoxItem.OnCancelClicked(Sender: TObject);
 begin
-  // Stop dosCommand if running
+    // Stop dosCommand if running
   if FdosCMD.IsRunning then
     FdosCMD.Stop;
+
+  FlblProgressText.Text := 'Stopping...';
+
+  while FdosCMD.IsRunning do
+    Application.ProcessMessages;
 
   // Clear bitmap from memory
   FIcon.Bitmap := nil;
@@ -221,20 +230,40 @@ begin
   if not (AOutputType = TOutputType.otEntireLine) then
     Exit;
 
+    // Info
+  if ANewLine.StartsWith('[title-info]') then
+  begin
+    FlblVideoTitle.Text := ParseInfo(ANewLine);
+  end;
+
   // Check if progress result
   if ANewLine.StartsWith('[yt-dlp]') then
   begin
     var progress := ParseProgress(ANewLine.Trim);
+    FpbProgress.Max := progress.totalBytes;
+    FpbProgress.Value := progress.downloadedBytes;
+
+    var dlValueFormatted := ConvertBytes(progress.downloadedBytes);
+    var dlMaxFormatted := ConvertBytes(progress.totalBytes);
+
+    FlblProgressText.Text := Format('%s / %s', [dlValueFormatted, dlMaxFormatted]);
   end
   else
   begin
     FLog.Add(ANewLine);
+    FlblProgressText.Text := ANewLine;
   end;
 end;
 
 procedure TDownloadListBoxItem.OnTerminate(Sender: TObject);
 begin
   FLog.Add('[Terminated]');
+  FlblProgressText.Text := 'Done';
+end;
+
+function TDownloadListBoxItem.ParseInfo(const Data: string): string;
+begin
+  Result := Data.Replace('[title-info]', '').Trim;
 end;
 
 function TDownloadListBoxItem.ParseProgress(const Data: string): TYTProgress;
@@ -248,14 +277,14 @@ begin
   try
     // Split the data
     sl.StrictDelimiter := True;
-    sl.Delimiter       := '|';
-    sl.DelimitedText   := Data;
+    sl.Delimiter := '|';
+    sl.DelimitedText := Data;
 
     // Dummy vars
     var downloadedBytes: Int64;
-    var totalBytes     : Int64;
-    var speed          : Double;
-    var eta            : Int64;
+    var totalBytes: Int64;
+    var speed: Double;
+    var eta: Int64;
 
     // Checks for strings before converting
 
@@ -277,10 +306,10 @@ begin
 
     // Result
     Result.downloadedBytes := sl[1].Trim.ToInt64;
-    Result.totalBytes      := sl[2].Trim.ToInt64;
-    Result.speed           := StrToFloat(sl[3].Trim, fs);
-    Result.eta             := sl[4].Trim.ToInt64;
-    Result.etaFormatted    := sl[5].Trim;
+    Result.totalBytes := sl[2].Trim.ToInt64;
+    Result.speed := StrToFloat(sl[3].Trim, fs);
+    Result.eta := sl[4].Trim.ToInt64;
+    Result.etaFormatted := sl[5].Trim;
   finally
     sl.Free;
   end;
@@ -298,9 +327,36 @@ end;
 
 procedure TDownloadListBoxItem.StartDownload;
 begin
+  FlblVideoTitle.Text := '';
+  FlblProgressText.Text := '';
+  FpbProgress.Value := 0;
+
+
   // Check if download link is empty
   if FDownloadLink.Trim.IsEmpty then
     Exit;
+
+  // Get Info
+  FlblVideoTitle.Text := 'Getting Info...';
+  FdosCMD.CommandLine := '.\yt-dlp.exe --print filename -o "[title-info] %(title)s" "' + FDownloadLink + '"';
+  FdosCMD.Execute;
+
+  while FdosCMD.IsRunning do
+    Application.ProcessMessages;
+
+  // Download URL
+  // Set Command Line
+  FdosCMD.CommandLine := '.\yt-dlp.exe --progress-template "' + TEMPLATE_PROGRESS + '" "' + FDownloadLink + '" -o %(title)s.%(ext)s';
+
+  // MP4
+  if FDownloadMediaType = TDownloadMediaType.mtMP4 then
+    FdosCMD.CommandLine := FdosCMD.CommandLine + ' --recode-video mp4';
+
+  // MP3
+  if FDownloadMediaType = TDownloadMediaType.mtMP3 then
+    FdosCMD.CommandLine := FdosCMD.CommandLine + ' --extract-audio --audio-format mp3';
+
+  FdosCMD.Execute;
 end;
 
 end.
