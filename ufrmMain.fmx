@@ -8,7 +8,6 @@ object frmMain: TfrmMain
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object statMain: TStatusBar
     Padding.Left = 5.000000000000000000
@@ -111,6 +110,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TabOrder = 3
       Text = 'Download MP4'
+      OnClick = btnDownloadMP4Click
     end
     object btnDownloadMP3: TButton
       Align = Right
@@ -123,6 +123,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TabOrder = 2
       Text = 'Download MP3'
+      OnClick = btnDownloadMP3Click
     end
   end
   object lblDownloadsHeader: TLabel
