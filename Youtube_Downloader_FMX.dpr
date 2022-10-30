@@ -1,5 +1,7 @@
 program Youtube_Downloader_FMX;
 
+{$R *.dres}
+
 uses
   System.StartUpCopy,
   FMX.Forms,

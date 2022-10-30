@@ -119,7 +119,13 @@ begin
   FIcon.HitTest := False;
   FIcon.Align := TAlignLayout.MostLeft;
   FIcon.Width := FIcon.Height;
-  FIcon.Bitmap.LoadFromFile('C:\Users\adria\Documents\GitHub\Youtube-Downloader\Assets\png\download-48.png');
+  var resStream := TResourceStream.Create(HInstance, 'img_download', RT_RCDATA);
+  try
+    FIcon.Bitmap.LoadFromStream(resStream);
+  finally
+    resStream.Free;
+  end;
+
 
   // Video Title
   FlblVideoTitle := TLabel.Create(FControlLayout);
