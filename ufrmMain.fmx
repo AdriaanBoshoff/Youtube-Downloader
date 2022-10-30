@@ -35,7 +35,7 @@ object frmMain: TfrmMain
         Size.PlatformDefault = False
         TextSettings.FontColor = claLime
         TextSettings.WordWrap = False
-        Text = '2022.10.16'
+        Text = '2022.10.30'
         TabOrder = 0
         OnResized = OnAppVersionResized
       end
