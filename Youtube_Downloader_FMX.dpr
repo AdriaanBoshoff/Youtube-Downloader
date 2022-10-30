@@ -6,7 +6,8 @@ uses
   Skia.FMX,
   ufrmMain in 'ufrmMain.pas' {frmMain},
   udmStyles in 'udmStyles.pas' {dmStyles: TDataModule},
-  uDownloadListBoxItem in 'uDownloadListBoxItem.pas';
+  uDownloadListBoxItem in 'uDownloadListBoxItem.pas',
+  uCommonFunctions in 'uCommonFunctions.pas';
 
 {$R *.res}
 
